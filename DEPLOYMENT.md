@@ -1,6 +1,6 @@
-# Deployment Guide for NoteFlow
+# Deployment Guide for CMDNote
 
-This guide will walk you through deploying NoteFlow to Netlify and setting up Supabase.
+This guide will walk you through deploying CMDNote to Netlify and setting up Supabase.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ This guide will walk you through deploying NoteFlow to Netlify and setting up Su
 2. Sign up or log in
 3. Click "New Project"
 4. Fill in your project details:
-   - Name: `noteflow` (or any name you prefer)
+   - Name: `cmdnote` (or any name you prefer)
    - Database Password: Choose a strong password (save it!)
    - Region: Choose the region closest to your users
 5. Click "Create new project"
@@ -85,7 +85,7 @@ git init
 git add .
 git commit -m "Initial commit"
 git branch -M main
-git remote add origin https://github.com/yourusername/noteflow.git
+git remote add origin https://github.com/yourusername/cmdnote.git
 git push -u origin main
 ```
 

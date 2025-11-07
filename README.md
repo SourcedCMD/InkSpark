@@ -1,6 +1,6 @@
-# NoteFlow - Personal Notepad Web Application
+# CMDNote - Personal Notepad Web Application
 
-A modern, feature-rich notepad web application inspired by Hyper Notepad. Create, edit, and share your notes with ease.
+CMDNote is a modern, feature-rich notepad web application inspired by Hyper Notepad. Create, edit, and share your notes with ease.
 
 ## Features
 
