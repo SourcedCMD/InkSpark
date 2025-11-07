@@ -15,7 +15,7 @@ export default function Home() {
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-2">
               <FileText className="h-8 w-8 text-primary-600" />
-              <span className="text-2xl font-bold text-gray-900 dark:text-white">NoteFlow</span>
+              <span className="text-2xl font-bold text-gray-900 dark:text-white">CMDNote</span>
             </div>
             <div className="flex items-center space-x-4">
               <button
@@ -86,7 +86,7 @@ export default function Home() {
       {/* Features Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <h2 className="text-3xl font-bold text-center text-gray-900 dark:text-white mb-12">
-          Why use NoteFlow?
+          Why use CMDNote?
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div className="text-center p-6 rounded-lg bg-gray-50 dark:bg-gray-800">
@@ -151,7 +151,7 @@ export default function Home() {
       <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-t border-gray-200 dark:border-gray-700 mt-16">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-600 dark:text-gray-400">
-            © 2025 NoteFlow. All rights reserved.
+            © 2025 CMDNote. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link to="/about" className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
@@ -163,4 +163,5 @@ export default function Home() {
     </div>
   )
 }
+
 
