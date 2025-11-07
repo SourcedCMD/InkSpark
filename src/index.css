@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200;
+  }
+}
+
+@layer components {
+  .ql-container {
+    @apply text-base;
+  }
+  
+  .ql-editor {
+    @apply min-h-[400px] text-gray-900 dark:text-gray-100;
+  }
+  
+  .ql-editor.ql-blank::before {
+    @apply text-gray-400 dark:text-gray-500 italic;
+  }
+  
+  .ql-toolbar {
+    @apply bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-t-lg;
+  }
+  
+  .ql-toolbar .ql-stroke {
+    @apply stroke-gray-700 dark:stroke-gray-300;
+  }
+  
+  .ql-toolbar .ql-fill {
+    @apply fill-gray-700 dark:fill-gray-300;
+  }
+  
+  .ql-toolbar button:hover,
+  .ql-toolbar button.ql-active {
+    @apply bg-gray-200 dark:bg-gray-700;
+  }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
+}
+
