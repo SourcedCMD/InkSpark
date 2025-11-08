@@ -33,14 +33,33 @@ export default function Signup() {
     setLoading(true)
 
     try {
-      const { error } = await signUp(email, password)
+      const { error, needsConfirmation } = await signUp(email, password)
       if (error) throw error
-      setSuccess('Account created successfully! Please check your email to verify your account.')
-      setTimeout(() => {
-        navigate('/dashboard')
-      }, 2000)
+      
+      if (needsConfirmation) {
+        setSuccess('Account created! Please check your email and click the confirmation link to activate your account.')
+        // Don't navigate to dashboard - user needs to confirm email first
+        setEmail('')
+        setPassword('')
+        setConfirmPassword('')
+      } else {
+        // User is already logged in (if email confirmation is disabled)
+        setSuccess('Account created successfully!')
+        setTimeout(() => {
+          navigate('/dashboard')
+        }, 1500)
+      }
     } catch (error) {
-      setError(error.message || 'Failed to create account')
+      let errorMessage = error.message || 'Failed to create account'
+      
+      // Handle specific Supabase errors
+      if (error.message?.includes('User already registered')) {
+        errorMessage = 'An account with this email already exists. Please sign in instead.'
+      } else if (error.message?.includes('Password')) {
+        errorMessage = 'Password should be at least 6 characters long.'
+      }
+      
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }

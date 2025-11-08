@@ -155,24 +155,54 @@ netlify deploy --prod
 2. Enable "Email" provider (it should be enabled by default)
 3. Configure email templates if desired
 
-### 4.2 (Optional) Set Up Custom Domain
+### 4.2 Configure Email Redirect URLs (IMPORTANT)
+
+This is critical for email confirmation to work properly:
+
+1. In Supabase dashboard, go to "Authentication" > "URL Configuration"
+2. Set the **Site URL** to your deployed Netlify URL (e.g., `https://your-app.netlify.app`)
+3. In **Redirect URLs**, add:
+   - `https://your-app.netlify.app/auth/confirm`
+   - `https://your-app.netlify.app/dashboard`
+   - `http://localhost:3000/auth/confirm` (for local development)
+   - `http://localhost:3000/dashboard` (for local development)
+
+**Note**: If you're testing locally, make sure to add `http://localhost:3000` URLs as well.
+
+### 4.3 Configure Email Settings
+
+1. In Supabase dashboard, go to "Authentication" > "Email Templates"
+2. You can customize the confirmation email template if needed
+3. Make sure "Enable email confirmations" is turned ON (if you want email verification)
+
+**Important**: If email confirmation is disabled, users can sign in immediately after signup. If it's enabled, users MUST click the confirmation link before they can sign in.
+
+### 4.4 (Optional) Set Up Custom Domain
 
 If you want to use a custom domain:
 1. In Netlify, go to "Domain settings"
 2. Add your custom domain
 3. Follow Netlify's instructions to configure DNS
-
-### 4.3 (Optional) Configure Email Redirects
-
-1. In Supabase dashboard, go to "Authentication" > "URL Configuration"
-2. Add your Netlify site URL to "Site URL"
-3. Add redirect URLs as needed
+4. Update Supabase redirect URLs to include your custom domain
 
 ## Troubleshooting
 
-### Issue: "Failed to sign in" errors
+### Issue: "Failed to sign in" errors or "Invalid login credentials"
 
-**Solution**: Check that your Supabase credentials are correct in Netlify environment variables.
+**Solutions**: 
+1. Check that your Supabase credentials are correct in Netlify environment variables
+2. **Most common issue**: Make sure the user has confirmed their email by clicking the confirmation link
+3. Check Supabase dashboard > Authentication > Users to see if the user's email is confirmed
+4. Verify redirect URLs are properly configured in Supabase (see Step 4.2)
+5. Try resetting the user's password if the issue persists
+
+### Issue: Users can't sign in after email confirmation
+
+**Solutions**:
+1. **Check redirect URLs**: Go to Supabase > Authentication > URL Configuration and ensure your site URL and redirect URLs are correct
+2. **Check email confirmation**: In Supabase dashboard > Authentication > Users, verify the user's email is confirmed (green checkmark)
+3. **Clear browser cache**: Sometimes old session data can cause issues
+4. **Check browser console**: Look for any JavaScript errors that might indicate the problem
 
 ### Issue: Notes not saving
 

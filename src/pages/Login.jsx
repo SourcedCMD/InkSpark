@@ -2,16 +2,42 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
-import { FileText, Moon, Sun, LogIn, AlertCircle } from 'lucide-react'
+import { FileText, Moon, Sun, LogIn, AlertCircle, Mail } from 'lucide-react'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { signIn } = useAuth()
+  const [showResendEmail, setShowResendEmail] = useState(false)
+  const [resendLoading, setResendLoading] = useState(false)
+  const [resendMessage, setResendMessage] = useState('')
+  const { signIn, resendConfirmationEmail } = useAuth()
   const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
+
+  const handleResendConfirmation = async () => {
+    if (!email) {
+      setResendMessage('Please enter your email address first')
+      return
+    }
+
+    setResendLoading(true)
+    setResendMessage('')
+    
+    try {
+      const { error } = await resendConfirmationEmail(email)
+      if (error) {
+        setResendMessage(error.message || 'Failed to send confirmation email')
+      } else {
+        setResendMessage('Confirmation email sent! Please check your inbox.')
+      }
+    } catch (error) {
+      setResendMessage('Failed to send confirmation email. Please try again.')
+    } finally {
+      setResendLoading(false)
+    }
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -19,11 +45,29 @@ export default function Login() {
     setLoading(true)
 
     try {
-      const { error } = await signIn(email, password)
-      if (error) throw error
-      navigate('/dashboard')
+      const { data, error } = await signIn(email, password)
+      if (error) {
+        // Check if it's an email confirmation issue
+        if (error.message?.includes('Email not confirmed') || error.message?.includes('confirm')) {
+          setError('Please check your email and click the confirmation link before signing in. If you didn\'t receive an email, check your spam folder.')
+        } else {
+          setError(error.message || 'Failed to sign in')
+        }
+        return
+      }
+      
+      // Successfully signed in
+      if (data?.user) {
+        navigate('/dashboard')
+      }
     } catch (error) {
-      setError(error.message || 'Failed to sign in')
+      const errorMsg = error.message || 'Failed to sign in. Please check your credentials and try again.'
+      setError(errorMsg)
+      
+      // Show resend email option if it's a confirmation issue
+      if (errorMsg.toLowerCase().includes('confirm') || errorMsg.toLowerCase().includes('email')) {
+        setShowResendEmail(true)
+      }
     } finally {
       setLoading(false)
     }
@@ -65,9 +109,39 @@ export default function Login() {
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             {error && (
-              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 px-4 py-3 rounded-md flex items-center">
-                <AlertCircle className="h-5 w-5 mr-2" />
-                {error}
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-800 dark:text-red-200 px-4 py-3 rounded-md">
+                <div className="flex items-center mb-2">
+                  <AlertCircle className="h-5 w-5 mr-2" />
+                  {error}
+                </div>
+                {showResendEmail && (
+                  <div className="mt-3 pt-3 border-t border-red-200 dark:border-red-800">
+                    <p className="text-sm mb-2">Didn't receive the confirmation email?</p>
+                    <button
+                      type="button"
+                      onClick={handleResendConfirmation}
+                      disabled={resendLoading || !email}
+                      className="text-sm text-primary-600 dark:text-primary-400 hover:underline disabled:opacity-50 disabled:cursor-not-allowed flex items-center"
+                    >
+                      {resendLoading ? (
+                        <>
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-primary-600 mr-2"></div>
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          <Mail className="h-4 w-4 mr-1" />
+                          Resend confirmation email
+                        </>
+                      )}
+                    </button>
+                    {resendMessage && (
+                      <p className={`text-xs mt-2 ${resendMessage.includes('sent') ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                        {resendMessage}
+                      </p>
+                    )}
+                  </div>
+                )}
               </div>
             )}
             <div className="rounded-md shadow-sm -space-y-px">

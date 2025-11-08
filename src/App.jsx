@@ -12,6 +12,7 @@ import SharedNote from './pages/SharedNote'
 import Settings from './pages/Settings'
 import About from './pages/About'
 import NotFound from './pages/NotFound'
+import EmailConfirm from './pages/EmailConfirm'
 import Layout from './components/Layout'
 
 function ProtectedRoute({ children }) {
@@ -37,6 +38,7 @@ function AppRoutes() {
       <Route path="/login" element={user ? <Navigate to="/dashboard" /> : <Login />} />
       <Route path="/signup" element={user ? <Navigate to="/dashboard" /> : <Signup />} />
       <Route path="/about" element={<About />} />
+      <Route path="/auth/confirm" element={<EmailConfirm />} />
       <Route
         path="/dashboard"
         element={
