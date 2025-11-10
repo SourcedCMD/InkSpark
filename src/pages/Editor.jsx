@@ -4,7 +4,7 @@ import ReactQuill from 'react-quill'
 import 'react-quill/dist/quill.snow.css'
 import { supabase, generateShareToken } from '../lib/supabase'
 import { useAuth } from '../context/AuthContext'
-import { Save, Share2, Download, Printer, ArrowLeft, Copy, Check, Lock, Unlock } from 'lucide-react'
+import { Save, Share2, Download, Printer, ArrowLeft, Copy, Check, Lock, Unlock, FileText } from 'lucide-react'
 import { format } from 'date-fns'
 
 export default function Editor() {
@@ -247,124 +247,150 @@ export default function Editor() {
   }
 
   return (
-    <div>
-      {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
-        <button
-          onClick={() => navigate('/dashboard')}
-          className="inline-flex items-center text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
-        >
-          <ArrowLeft className="h-5 w-5 mr-2" />
-          Back to Dashboard
-        </button>
-        <div className="flex flex-wrap items-center gap-2">
+    <div className="relative">
+      <div className="pointer-events-none absolute -top-32 -left-24 h-64 w-64 rounded-full bg-primary-400/30 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-40 -right-24 h-72 w-72 rounded-full bg-sky-400/20 blur-3xl" />
+
+      <div className="relative">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 space-y-4 sm:space-y-0">
+          <button
+            onClick={() => navigate('/dashboard')}
+            className="inline-flex items-center text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors"
+          >
+            <span className="mr-2 flex h-8 w-8 items-center justify-center rounded-full bg-white/80 dark:bg-white/10 shadow-md">
+              <ArrowLeft className="h-4 w-4" />
+            </span>
+            Back to Dashboard
+          </button>
           {lastSaved && (
-            <span className="text-sm text-gray-500 dark:text-gray-400">
+            <span className="text-sm text-slate-500 dark:text-slate-400">
               Saved {format(lastSaved, 'hh:mm:ss a')}
             </span>
           )}
-          <button
-            onClick={() => handleSave(false)}
-            disabled={saving}
-            className="inline-flex items-center px-3 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50"
-          >
-            <Save className="h-4 w-4 mr-2" />
-            {saving ? 'Saving...' : 'Save'}
-          </button>
-          <button
-            onClick={handleShare}
-            className="inline-flex items-center px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-          >
-            {copied ? (
-              <>
-                <Check className="h-4 w-4 mr-2" />
-                Copied!
-              </>
-            ) : (
-              <>
-                <Share2 className="h-4 w-4 mr-2" />
-                Share
-              </>
-            )}
-          </button>
-          <button
-            onClick={() => setIsReadOnly(!isReadOnly)}
-            className="inline-flex items-center px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-            title={isReadOnly ? 'Make editable' : 'Make read-only'}
-          >
-            {isReadOnly ? (
-              <Lock className="h-4 w-4" />
-            ) : (
-              <Unlock className="h-4 w-4" />
-            )}
-          </button>
-          <button
-            onClick={handleDownload}
-            className="inline-flex items-center px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-          >
-            <Download className="h-4 w-4 mr-2" />
-            Download
-          </button>
-          <button
-            onClick={handlePrint}
-            className="inline-flex items-center px-3 py-2 bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-white rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"
-          >
-            <Printer className="h-4 w-4 mr-2" />
-            Print
-          </button>
         </div>
-      </div>
 
-      {/* Share Link Display */}
-      {shareToken && isPublic && (
-        <div className="mb-4 p-4 bg-primary-50 dark:bg-primary-900/20 border border-primary-200 dark:border-primary-800 rounded-lg">
-          <p className="text-sm font-medium text-primary-900 dark:text-primary-200 mb-2">
-            Shareable Link:
-          </p>
-          <div className="flex items-center space-x-2">
+        <div className="floating-panel px-5 py-6 sm:px-8 sm:py-8 space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-3 floating-toolbar px-4 py-3">
+            <div className="flex items-center space-x-3">
+              <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-primary-500 via-primary-400 to-primary-600 text-white flex items-center justify-center shadow-lg">
+                <FileText className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-xs uppercase tracking-wider text-primary-500 dark:text-primary-300 font-semibold">
+                  InkSpark Editor
+                </p>
+                <p className="text-sm text-slate-500 dark:text-slate-300">
+                  Craft and share beautiful notes instantly
+                </p>
+              </div>
+            </div>
+            <div className="flex flex-wrap items-center gap-2">
+              <button
+                onClick={() => handleSave(false)}
+                disabled={saving}
+                className="inline-flex items-center px-4 py-2 rounded-xl bg-primary-500 text-white shadow-md shadow-primary-500/40 hover:bg-primary-600 transition-colors disabled:opacity-60"
+              >
+                <Save className="h-4 w-4 mr-2" />
+                {saving ? 'Saving...' : 'Save'}
+              </button>
+              <button
+                onClick={handleShare}
+                className="inline-flex items-center px-4 py-2 rounded-xl bg-white/90 dark:bg-white/10 text-slate-700 dark:text-white border border-white/70 dark:border-white/10 shadow-sm hover:bg-white dark:hover:bg-white/20 transition-colors"
+              >
+                {copied ? (
+                  <>
+                    <Check className="h-4 w-4 mr-2" />
+                    Copied!
+                  </>
+                ) : (
+                  <>
+                    <Share2 className="h-4 w-4 mr-2" />
+                    Share
+                  </>
+                )}
+              </button>
+              <button
+                onClick={() => setIsReadOnly(!isReadOnly)}
+                className="inline-flex items-center px-4 py-2 rounded-xl bg-white/80 dark:bg-white/10 text-slate-700 dark:text-white border border-white/70 dark:border-white/10 hover:bg-white dark:hover:bg-white/20 transition-colors"
+                title={isReadOnly ? 'Make editable' : 'Make read-only'}
+              >
+                {isReadOnly ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
+              </button>
+              <button
+                onClick={handleDownload}
+                className="inline-flex items-center px-4 py-2 rounded-xl bg-white/80 dark:bg-white/10 text-slate-700 dark:text-white border border-white/70 dark:border-white/10 hover:bg-white dark:hover:bg-white/20 transition-colors"
+              >
+                <Download className="h-4 w-4 mr-2" />
+                Download
+              </button>
+              <button
+                onClick={handlePrint}
+                className="inline-flex items-center px-4 py-2 rounded-xl bg-white/80 dark:bg-white/10 text-slate-700 dark:text-white border border-white/70 dark:border-white/10 hover:bg-white dark:hover:bg-white/20 transition-colors"
+              >
+                <Printer className="h-4 w-4 mr-2" />
+                Print
+              </button>
+            </div>
+          </div>
+
+          {shareToken && isPublic && (
+            <div className="floating-toolbar px-4 py-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-3 space-y-3 sm:space-y-0">
+                <div className="flex-1">
+                  <p className="text-sm font-semibold text-primary-600 dark:text-primary-300 mb-2">
+                    Shareable Link
+                  </p>
+                  <div className="flex items-center space-x-2">
+                    <input
+                      type="text"
+                      readOnly
+                      value={`${window.location.origin}/shared/${shareToken}`}
+                      className="flex-1 px-3 py-2 bg-white/70 dark:bg-slate-900/70 border border-white/60 dark:border-white/10 rounded-lg text-sm text-slate-700 dark:text-slate-200"
+                    />
+                    <button
+                      onClick={() => {
+                        navigator.clipboard.writeText(`${window.location.origin}/shared/${shareToken}`)
+                        setCopied(true)
+                        setTimeout(() => setCopied(false), 2000)
+                      }}
+                      className="px-3 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors"
+                    >
+                      {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+                    </button>
+                  </div>
+                  <p className="text-xs text-primary-500 dark:text-primary-300 mt-2">
+                    {isReadOnly ? 'Read-only link' : 'Editable link'}
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className="space-y-3">
+            <label className="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold">
+              Title
+            </label>
             <input
               type="text"
-              readOnly
-              value={`${window.location.origin}/shared/${shareToken}`}
-              className="flex-1 px-3 py-2 bg-white dark:bg-gray-800 border border-primary-300 dark:border-primary-700 rounded text-sm"
+              placeholder="Untitled note"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              className="w-full px-4 py-3 text-2xl font-semibold bg-white/80 dark:bg-slate-900/70 border border-white/70 dark:border-white/10 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-500/30 text-slate-800 dark:text-white shadow-inner"
             />
-            <button
-              onClick={() => {
-                navigator.clipboard.writeText(`${window.location.origin}/shared/${shareToken}`)
-                setCopied(true)
-                setTimeout(() => setCopied(false), 2000)
-              }}
-              className="px-3 py-2 bg-primary-600 text-white rounded hover:bg-primary-700 transition-colors"
-            >
-              {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
-            </button>
           </div>
-          <p className="text-xs text-primary-700 dark:text-primary-300 mt-2">
-            {isReadOnly ? 'Read-only link' : 'Editable link'}
-          </p>
+
+          <div className="rounded-3xl border border-white/70 dark:border-white/10 bg-white/85 dark:bg-slate-900/60 shadow-[0px_35px_80px_rgba(15,23,42,0.12)] overflow-hidden">
+            <ReactQuill
+              ref={quillRef}
+              theme="snow"
+              value={content}
+              onChange={setContent}
+              modules={modules}
+              placeholder="Start writing your note..."
+              readOnly={false}
+            />
+          </div>
         </div>
-      )}
-
-      {/* Title Input */}
-      <input
-        type="text"
-        placeholder="Note title..."
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        className="w-full px-4 py-3 text-2xl font-bold bg-transparent border-b-2 border-gray-200 dark:border-gray-700 focus:outline-none focus:border-primary-500 text-gray-900 dark:text-white mb-4"
-      />
-
-      {/* Editor */}
-      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
-        <ReactQuill
-          ref={quillRef}
-          theme="snow"
-          value={content}
-          onChange={setContent}
-          modules={modules}
-          placeholder="Start writing your note..."
-          readOnly={false}
-        />
       </div>
     </div>
   )

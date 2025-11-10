@@ -1,6 +1,6 @@
-# CMDNote - Personal Notepad Web Application
+# InkSpark - Personal Notepad Web Application
 
-CMDNote is a modern, feature-rich notepad web application. Create, edit, and share your notes with ease.
+InkSpark is a modern, feature-rich notepad web application inspired by Hyper Notepad. Create, edit, and share your notes with ease.
 
 ## Features
 
@@ -75,5 +75,4 @@ npm run build
 ## License
 
 MIT
-
 

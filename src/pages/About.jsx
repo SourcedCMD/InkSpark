@@ -13,7 +13,7 @@ export default function About() {
           <div className="flex justify-between items-center">
             <Link to="/" className="flex items-center space-x-2">
               <FileText className="h-8 w-8 text-primary-600" />
-              <span className="text-2xl font-bold text-gray-900 dark:text-white">CMDNote</span>
+              <span className="text-2xl font-bold text-gray-900 dark:text-white">InkSpark</span>
             </Link>
             <div className="flex items-center space-x-4">
               <button
@@ -35,11 +35,11 @@ export default function About() {
 
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-8">About CMDNote</h1>
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-8">About InkSpark</h1>
 
         <div className="prose dark:prose-invert max-w-none">
           <p className="text-lg text-gray-600 dark:text-gray-400 mb-6">
-            CMDNote is a free, secure online notepad tool for taking notes, writing documents, saving ideas, and sharing content instantly.
+            InkSpark is a free, secure online notepad tool for taking notes, writing documents, saving ideas, and sharing content instantly.
           </p>
 
           <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">Features</h2>
@@ -76,7 +76,7 @@ export default function About() {
 
           <h2 className="text-2xl font-semibold text-gray-900 dark:text-white mt-8 mb-4">Technology</h2>
           <p className="text-gray-600 dark:text-gray-400 mb-4">
-            CMDNote is built with modern web technologies:
+            InkSpark is built with modern web technologies:
           </p>
           <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 space-y-2 mb-8">
             <li>React - A JavaScript library for building user interfaces</li>
@@ -114,7 +114,7 @@ export default function About() {
       {/* Footer */}
       <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 border-t border-gray-200 dark:border-gray-700 mt-16">
         <div className="text-center text-gray-600 dark:text-gray-400">
-          <p>© 2025 CMDNote. All rights reserved.</p>
+          <p>© 2025 InkSpark. All rights reserved.</p>
         </div>
       </footer>
     </div>

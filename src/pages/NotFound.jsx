@@ -13,7 +13,7 @@ export default function NotFound() {
           <div className="flex justify-between items-center">
             <Link to="/" className="flex items-center space-x-2">
               <FileText className="h-8 w-8 text-primary-600" />
-              <span className="text-2xl font-bold text-gray-900 dark:text-white">CMDNote</span>
+              <span className="text-2xl font-bold text-gray-900 dark:text-white">InkSpark</span>
             </Link>
             <button
               onClick={toggleTheme}

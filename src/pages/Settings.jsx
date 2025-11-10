@@ -91,11 +91,11 @@ export default function Settings() {
 
         {/* About */}
         <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
-          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">About CMDNote</h2>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">About InkSpark</h2>
           <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
             <p>Version 1.0.0</p>
             <p>
-              CMDNote is a modern, feature-rich notepad web application for creating, editing, and sharing notes.
+              InkSpark is a modern, feature-rich notepad web application for creating, editing, and sharing notes.
             </p>
             <p className="mt-4">
               Built with React, Supabase, and Tailwind CSS.

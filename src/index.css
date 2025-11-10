@@ -4,11 +4,33 @@
 
 @layer base {
   body {
-    @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200;
+    @apply text-gray-900 dark:text-gray-100 transition-colors duration-200;
+    background: radial-gradient(120% 120% at 50% 0%, #f6f8ff 0%, #ecf1ff 35%, #e6ecfe 60%, #f5f7ff 100%);
+  }
+
+  html.dark body {
+    background: radial-gradient(120% 120% at 50% 0%, #0f172a 0%, #111827 40%, #0b1120 100%);
   }
 }
 
 @layer components {
+  .app-shell {
+    @apply min-h-screen;
+    background: radial-gradient(180% 180% at 50% 0%, rgba(255, 255, 255, 0.9) 0%, rgba(244, 247, 255, 0.85) 45%, rgba(232, 236, 255, 0.8) 100%);
+  }
+
+  .dark .app-shell {
+    background: radial-gradient(140% 140% at 50% 0%, rgba(15, 23, 42, 0.92) 0%, rgba(17, 24, 39, 0.88) 50%, rgba(15, 23, 42, 0.92) 100%);
+  }
+
+  .floating-panel {
+    @apply bg-white/80 dark:bg-slate-900/70 border border-white/70 dark:border-white/10 shadow-[0px_35px_80px_rgba(15,23,42,0.15)] backdrop-blur-xl rounded-3xl;
+  }
+
+  .floating-toolbar {
+    @apply bg-white/90 dark:bg-slate-900/80 border border-white/60 dark:border-white/10 shadow-[0px_15px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl rounded-2xl;
+  }
+
   .ql-container {
     @apply text-base;
   }
@@ -22,7 +44,7 @@
   }
   
   .ql-toolbar {
-    @apply bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 rounded-t-lg;
+    @apply bg-white/80 dark:bg-slate-900/70 border border-white/60 dark:border-white/10 rounded-t-3xl backdrop-blur-xl px-4 py-3;
   }
   
   .ql-toolbar .ql-stroke {
@@ -35,7 +57,7 @@
   
   .ql-toolbar button:hover,
   .ql-toolbar button.ql-active {
-    @apply bg-gray-200 dark:bg-gray-700;
+    @apply bg-white/70 dark:bg-white/10;
   }
 }
 

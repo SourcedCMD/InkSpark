@@ -69,115 +69,124 @@ export default function Dashboard() {
   }
 
   return (
-    <div>
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-            My Notes
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400">
-            Create, edit, and manage your notes
-          </p>
-        </div>
-        <button
-          onClick={handleCreateNote}
-          className="mt-4 sm:mt-0 inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
-        >
-          <Plus className="h-5 w-5 mr-2" />
-          New Note
-        </button>
-      </div>
+    <div className="relative">
+      <div className="pointer-events-none absolute -top-32 right-0 h-56 w-56 rounded-full bg-primary-400/25 blur-3xl" />
+      <div className="pointer-events-none absolute bottom-0 left-10 h-64 w-64 rounded-full bg-sky-400/20 blur-3xl" />
 
-      {/* Search Bar */}
-      <div className="mb-6">
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-          <input
-            type="text"
-            placeholder="Search notes..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-primary-500"
-          />
+      <div className="relative space-y-6">
+        <div className="floating-toolbar px-6 py-5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-widest text-primary-500 dark:text-primary-300 font-semibold">
+              Your Workspace
+            </p>
+            <h1 className="mt-1 text-3xl font-semibold text-slate-800 dark:text-white tracking-tight">
+              My Notes
+            </h1>
+            <p className="text-slate-500 dark:text-slate-300">
+              Capture ideas, save thoughts, and collaborate instantly.
+            </p>
+          </div>
+          <button
+            onClick={handleCreateNote}
+            className="inline-flex items-center px-5 py-3 rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 text-white font-medium shadow-lg shadow-primary-500/40 hover:from-primary-600 hover:to-primary-700 transition-colors"
+          >
+            <Plus className="h-5 w-5 mr-2" />
+            New Note
+          </button>
         </div>
-      </div>
 
-      {/* Notes Grid */}
-      {filteredNotes.length === 0 ? (
-        <div className="text-center py-12">
-          <FileText className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-            {searchQuery ? 'No notes found' : 'No notes yet'}
-          </h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
-            {searchQuery
-              ? 'Try adjusting your search query'
-              : 'Get started by creating your first note'}
-          </p>
-          {!searchQuery && (
-            <button
-              onClick={handleCreateNote}
-              className="inline-flex items-center px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors"
-            >
-              <Plus className="h-5 w-5 mr-2" />
-              Create Note
-            </button>
-          )}
+        <div className="floating-panel px-6 py-5">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 h-5 w-5" />
+            <input
+              type="text"
+              placeholder="Search your notes..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 rounded-xl bg-white/80 dark:bg-slate-900/60 border border-white/70 dark:border-white/10 text-slate-700 dark:text-white focus:outline-none focus:ring-4 focus:ring-primary-200/80 dark:focus:ring-primary-500/30 shadow-inner"
+            />
+          </div>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredNotes.map((note) => (
-            <div
-              key={note.id}
-              className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow cursor-pointer"
-              onClick={() => navigate(`/editor/${note.id}`)}
-            >
-              <div className="flex justify-between items-start mb-3">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white truncate flex-1">
-                  {note.title || 'Untitled Note'}
-                </h3>
-                <div className="flex space-x-2 ml-2">
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      navigate(`/editor/${note.id}`)
-                    }}
-                    className="p-1 text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
-                    title="Edit"
-                  >
-                    <Edit className="h-4 w-4" />
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      handleDelete(note.id)
-                    }}
-                    className="p-1 text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400"
-                    title="Delete"
-                  >
-                    <Trash2 className="h-4 w-4" />
-                  </button>
-                </div>
-              </div>
-              <p className="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-3">
-                {note.content?.replace(/<[^>]*>/g, '').substring(0, 100)}...
-              </p>
-              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400">
-                <div className="flex items-center">
-                  <Calendar className="h-3 w-3 mr-1" />
-                  {format(new Date(note.updated_at), 'MMM d, yyyy')}
-                </div>
-                {note.share_token && (
-                  <div className="flex items-center text-primary-600 dark:text-primary-400">
-                    <Share2 className="h-3 w-3 mr-1" />
-                    Shared
-                  </div>
-                )}
-              </div>
+
+        {/* Notes Grid */}
+        {filteredNotes.length === 0 ? (
+          <div className="floating-panel px-10 py-16 text-center">
+            <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-3xl bg-white/80 dark:bg-white/10 shadow-lg">
+              <FileText className="h-8 w-8 text-primary-500" />
             </div>
-          ))}
-        </div>
-      )}
+            <h3 className="text-2xl font-semibold text-slate-800 dark:text-white mb-2">
+              {searchQuery ? 'No notes match that search' : 'Create your first note'}
+            </h3>
+            <p className="text-slate-500 dark:text-slate-300 mb-6 max-w-sm mx-auto">
+              {searchQuery
+                ? 'Try a different keyword or create a new note to capture fresh ideas.'
+                : 'InkSpark saves every keystroke so you can focus on writing.'}
+            </p>
+            {!searchQuery && (
+              <button
+                onClick={handleCreateNote}
+                className="inline-flex items-center px-5 py-3 rounded-xl bg-gradient-to-r from-primary-500 to-primary-600 text-white font-medium shadow-lg shadow-primary-500/30 hover:from-primary-600 hover:to-primary-700 transition-colors"
+              >
+                <Plus className="h-5 w-5 mr-2" />
+                Create Note
+              </button>
+            )}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredNotes.map((note) => (
+              <div
+                key={note.id}
+                className="floating-panel p-6 hover:-translate-y-1 hover:shadow-[0px_30px_80px_rgba(15,23,42,0.18)] transition-all duration-200 cursor-pointer"
+                onClick={() => navigate(`/editor/${note.id}`)}
+              >
+                <div className="flex justify-between items-start mb-3">
+                  <h3 className="text-lg font-semibold text-slate-800 dark:text-white truncate flex-1">
+                    {note.title || 'Untitled Note'}
+                  </h3>
+                  <div className="flex space-x-2 ml-2">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        navigate(`/editor/${note.id}`)
+                      }}
+                      className="p-1.5 rounded-lg text-slate-500 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-400 hover:bg-white/70 dark:hover:bg-white/10 transition-colors"
+                      title="Edit"
+                    >
+                      <Edit className="h-4 w-4" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        handleDelete(note.id)
+                      }}
+                      className="p-1.5 rounded-lg text-slate-500 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 hover:bg-white/70 dark:hover:bg-white/10 transition-colors"
+                      title="Delete"
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </button>
+                  </div>
+                </div>
+                <p className="text-slate-500 dark:text-slate-300 text-sm mb-4 line-clamp-3">
+                  {note.content?.replace(/<[^>]*>/g, '').substring(0, 140)}...
+                </p>
+                <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                  <div className="flex items-center">
+                    <Calendar className="h-3 w-3 mr-1" />
+                    {format(new Date(note.updated_at), 'MMM d, yyyy')}
+                  </div>
+                  {note.share_token && (
+                    <div className="flex items-center text-primary-600 dark:text-primary-400">
+                      <Share2 className="h-3 w-3 mr-1" />
+                      Shared
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   )
 }

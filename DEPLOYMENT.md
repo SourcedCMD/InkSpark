@@ -1,6 +1,6 @@
-# Deployment Guide for CMDNote
+# Deployment Guide for InkSpark
 
-This guide will walk you through deploying CMDNote to Netlify and setting up Supabase.
+This guide will walk you through deploying InkSpark to Netlify and setting up Supabase.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ This guide will walk you through deploying CMDNote to Netlify and setting up Sup
 2. Sign up or log in
 3. Click "New Project"
 4. Fill in your project details:
-   - Name: `cmdnote` (or any name you prefer)
+   - Name: `inkspark` (or any name you prefer)
    - Database Password: Choose a strong password (save it!)
    - Region: Choose the region closest to your users
 5. Click "Create new project"
@@ -85,7 +85,7 @@ git init
 git add .
 git commit -m "Initial commit"
 git branch -M main
-git remote add origin https://github.com/yourusername/cmdnote.git
+git remote add origin https://github.com/yourusername/inkspark.git
 git push -u origin main
 ```
 
