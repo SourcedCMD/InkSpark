@@ -71,7 +71,7 @@ export default function Home() {
               Write, organize, and share in seconds
             </h1>
             <p className="mt-4 text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-              InkSpark captures every thought with instant autosave, floating notes, and shareable links inspired by the sleek experience of Hyper Notepad.
+              InkSpark captures every thought with instant autosave, floating notes, and shareable links inspired by the sleek experience of 💖.
             </p>
             <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
               <Link
@@ -168,7 +168,7 @@ export default function Home() {
           <p className="text-slate-600 dark:text-slate-300">
             © 2025 InkSpark. Crafted with inspiration from{' '}
             <a href="https://hypernotepad.com/" className="text-primary-500 hover:underline">
-              Hyper Notepad
+              💖
             </a>
             .
           </p>
@@ -182,4 +182,5 @@ export default function Home() {
     </div>
   )
 }
+
 
